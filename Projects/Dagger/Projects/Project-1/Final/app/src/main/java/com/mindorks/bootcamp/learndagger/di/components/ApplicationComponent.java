@@ -26,4 +26,5 @@ public interface ApplicationComponent {
 
     void inject(MyApplication application);
 
+
 }
