@@ -9,7 +9,7 @@ import com.droid.code.R;
 
 public class MainActivity extends AppCompatActivity {
 
-    public MainViewModel viewModel;
+    //public MainViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
 
         //DependencyComponent.inject(this);
 
-        TextView tvData = findViewById(R.id.tvData);
-        tvData.setText(viewModel.getSomeData());
+        //TextView tvData = findViewById(R.id.tvData);
+       // tvData.setText(viewModel.getSomeData());
     }
 }
