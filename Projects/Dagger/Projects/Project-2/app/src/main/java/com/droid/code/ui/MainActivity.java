@@ -6,6 +6,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.droid.code.MyApplication;
 import com.droid.code.R;
 import com.droid.code.di.components.DaggerApplicationActivityComponent;
 import com.droid.code.di.modules.ActivityModule;
@@ -25,13 +26,9 @@ public class MainActivity extends AppCompatActivity {
         DaggerApplicationActivityComponent
                 .builder()
                 .activityModule(new ActivityModule(this))
+                .applicationComponent(((MyApplication)getApplication()).applicationComponent)
                 .build().inject(this);
 
-        //DependencyComponent.inject(this);
-
         Toast.makeText(this,viewModel.getSomeData(),Toast.LENGTH_LONG).show();
-
-        //TextView tvData = findViewById(R.id.tvData);
-       // tvData.setText(viewModel.getSomeData());
     }
 }

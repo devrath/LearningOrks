@@ -20,11 +20,9 @@ public class ActivityModule {
     }
 
     @Provides
-    MainViewModel providesMainViewModule() {
-        return new MainViewModel(
-                new DatabaseService(context,"name",1),
-                new NetworkService(context,"key")
-        );
+    MainViewModel providesMainViewModule(DatabaseService databaseService,
+                                         NetworkService networkService) {
+        return new MainViewModel(databaseService,networkService);
     }
 
 }
