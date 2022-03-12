@@ -9,19 +9,29 @@ import com.demo.code.instagram.utils.rx.SchedulerProvider
 import io.reactivex.disposables.CompositeDisposable
 import javax.net.ssl.HttpsURLConnection
 
-
+/**
+ * The view model class has all the parameters that are needed by a view model to work
+ * PROTECTED: It is used because only the inheriting classes mist access it
+ *
+ */
 abstract class BaseViewModel(
     protected val schedulerProvider: SchedulerProvider,
+    // We need this for the purpose of using the rx java and to add the composable one by one as needed
     protected val compositeDisposable: CompositeDisposable,
+    // Network helper is used to check the connectivity
     protected val networkHelper: NetworkHelper
 ) : ViewModel() {
 
+    // This method is called whenever the view model is destroyed by android framework
     override fun onCleared() {
+        // here we need to dispose all the composable
         compositeDisposable.dispose()
         super.onCleared()
     }
 
+    // This live data helps to pass certain strings mentioned in the strings resource, Ex: R.strings.hello
     val messageStringId: MutableLiveData<Resource<Int>> = MutableLiveData()
+    // This is used to pass some message that is getting directly from the server
     val messageString: MutableLiveData<Resource<String>> = MutableLiveData()
 
     protected fun checkInternetConnectionWithMessage(): Boolean =

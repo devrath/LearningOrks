@@ -15,6 +15,8 @@ import javax.inject.Inject
 /**
  * Reference for generics: https://kotlinlang.org/docs/reference/generics.html
  * Basically BaseActivity will take any class that extends BaseViewModel
+ *
+ * Every activity needs a view model so lets pass view model as the generic parameter
  */
 abstract class BaseActivity<VM : BaseViewModel> : AppCompatActivity() {
 
