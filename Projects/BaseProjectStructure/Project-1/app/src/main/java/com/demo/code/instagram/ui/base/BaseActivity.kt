@@ -17,6 +17,7 @@ import javax.inject.Inject
  * Basically BaseActivity will take any class that extends BaseViewModel
  *
  * Every activity needs a view model so lets pass view model as the generic parameter
+ * Also making sure the generic type is always base view model or something that inherits base-view-model
  */
 abstract class BaseActivity<VM : BaseViewModel> : AppCompatActivity() {
 
@@ -39,6 +40,9 @@ abstract class BaseActivity<VM : BaseViewModel> : AppCompatActivity() {
             .activityModule(ActivityModule(this))
             .build()
 
+    /**
+     * Certain observers that are needed in all the activities
+     */
     protected open fun setupObservers() {
         viewModel.messageString.observe(this, Observer {
             it.data?.run { showMessage(this) }
@@ -49,9 +53,11 @@ abstract class BaseActivity<VM : BaseViewModel> : AppCompatActivity() {
         })
     }
 
+    /** ******* Here we show user a notification as some message ******* **/
     fun showMessage(message: String) = Toaster.show(applicationContext, message)
 
     fun showMessage(@StringRes resId: Int) = showMessage(getString(resId))
+    /** *************************************************************** **/
 
     open fun goBack() = onBackPressed()
 
@@ -61,10 +67,16 @@ abstract class BaseActivity<VM : BaseViewModel> : AppCompatActivity() {
         else super.onBackPressed()
     }
 
+    /** ******************* Abstract methods ******************* **/
+    /**
+     * This util function helps to pass layout resource as a function
+     * I can mention @LayoutRes so that the function only accepts layout as a resource
+     */
     @LayoutRes
     protected abstract fun provideLayoutId(): Int
 
     protected abstract fun injectDependencies(activityComponent: ActivityComponent)
 
     protected abstract fun setupView(savedInstanceState: Bundle?)
+    /** ******************* Abstract methods ******************* **/
 }
