@@ -12,7 +12,8 @@ import javax.net.ssl.HttpsURLConnection
 /**
  * The view model class has all the parameters that are needed by a view model to work
  * PROTECTED: It is used because only the inheriting classes mist access it
- *
+ * ******
+ * The BaseViewModel is made abstract because, No one should create the instance of view model
  */
 abstract class BaseViewModel(
     protected val schedulerProvider: SchedulerProvider,
@@ -22,6 +23,11 @@ abstract class BaseViewModel(
     protected val networkHelper: NetworkHelper
 ) : ViewModel() {
 
+    // This live data helps to pass certain strings mentioned in the strings resource, Ex: R.strings.hello
+    val messageStringId: MutableLiveData<Resource<Int>> = MutableLiveData()
+    // This is used to pass some message that is getting directly from the server
+    val messageString: MutableLiveData<Resource<String>> = MutableLiveData()
+
     // This method is called whenever the view model is destroyed by android framework
     override fun onCleared() {
         // here we need to dispose all the composable
@@ -29,11 +35,9 @@ abstract class BaseViewModel(
         super.onCleared()
     }
 
-    // This live data helps to pass certain strings mentioned in the strings resource, Ex: R.strings.hello
-    val messageStringId: MutableLiveData<Resource<Int>> = MutableLiveData()
-    // This is used to pass some message that is getting directly from the server
-    val messageString: MutableLiveData<Resource<String>> = MutableLiveData()
-
+    /**
+     * We need to have a method that is used to keep state of the network connectivity in the view model
+     */
     protected fun checkInternetConnectionWithMessage(): Boolean =
         if (networkHelper.isNetworkConnected()) {
             true
@@ -44,6 +48,9 @@ abstract class BaseViewModel(
 
     protected fun checkInternetConnection(): Boolean = networkHelper.isNetworkConnected()
 
+    /**
+     * This method is used to handle the error that the throwable sends
+     */
     protected fun handleNetworkError(err: Throwable?) =
         err?.let {
             networkHelper.castToNetworkError(it).run {
@@ -67,5 +74,6 @@ abstract class BaseViewModel(
         // do something
     }
 
+    // UI can tell the view-model that it is created and it can do somethings like fetching the data
     abstract fun onCreate()
 }

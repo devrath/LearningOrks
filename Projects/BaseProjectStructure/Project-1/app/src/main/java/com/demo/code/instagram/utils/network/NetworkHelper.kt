@@ -17,6 +17,9 @@ class NetworkHelper constructor(private val context: Context) {
         private const val TAG = "NetworkHelper"
     }
 
+    /**
+     * It will check and return the network state, whether it is connected to internet or otherwise
+     */
     fun isNetworkConnected(): Boolean {
         val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val activeNetwork = cm.activeNetworkInfo
