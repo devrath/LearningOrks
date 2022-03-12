@@ -25,6 +25,7 @@ abstract class BaseActivity<VM : BaseViewModel> : AppCompatActivity() {
     lateinit var viewModel: VM
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        // This solves many production bugs, So better to prepare the dependency needed before onCreate is called
         injectDependencies(buildActivityComponent())
         super.onCreate(savedInstanceState)
         setContentView(provideLayoutId())
