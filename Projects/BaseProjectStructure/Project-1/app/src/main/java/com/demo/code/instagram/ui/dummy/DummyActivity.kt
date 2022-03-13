@@ -12,8 +12,10 @@ class DummyActivity : BaseActivity<DummyViewModel>() {
         const val TAG = "DummyActivity"
     }
 
+    // Provide layout ID
     override fun provideLayoutId(): Int = R.layout.activity_dummy
 
+    // Inject dependencies
     override fun injectDependencies(activityComponent: ActivityComponent) {
         activityComponent.inject(this)
     }
